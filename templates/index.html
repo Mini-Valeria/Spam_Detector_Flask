@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detector de Spam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: url('https://images.unsplash.com/photo-1564951434112-64d74cc2a2d7?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJsdWUlMjBhZXN0aGV0aWN8ZW58MHx8MHx8fDA%3D') no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .container {
+    background: linear-gradient(270deg, #a1c4fd, #c2e9fb, #fbc2eb, #fcb69f, #a1c4fd);
+    background-size: 1000% 1000%;
+    animation: gradientBG 8s ease-in-out infinite;
+    box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    border: 1.5px solid rgba(255,255,255,0.24);
+    padding: 44px 38px 32px 38px;
+    max-width: 420px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeInUp 1.2s cubic-bezier(.23,1.01,.32,1) both;
+    }
+    @keyframes gradientBG {
+        0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+    }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+    }
+        .logo {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 18px;
+            background: linear-gradient(135deg, #1976d2 60%, #42a5f5 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 18px rgba(25,118,210,0.18);
+            animation: mailBounce 1.2s cubic-bezier(.23,1.01,.32,1) both;
+        }
+        @keyframes mailBounce {
+            0% { transform: scale(0.7) translateY(-60px); opacity: 0; }
+            60% { transform: scale(1.1) translateY(10px); opacity: 1; }
+            80% { transform: scale(0.95) translateY(-4px);}
+            100% { transform: scale(1) translateY(0);}
+        }
+        .logo svg {
+            width: 40px;
+            height: 40px;
+            fill: #fff;
+            animation: mailWiggle 2.5s infinite alternate;
+        }
+        @keyframes mailWiggle {
+            0% { transform: rotate(-6deg);}
+            100% { transform: rotate(6deg);}
+        }
+        h1 {
+            text-align: center;
+            color: #2d3a4b;
+            margin-bottom: 28px;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(44,62,80,0.07);
+        }
+        form {
+            width: 100%;
+            margin-bottom: 0;
+        }
+        .form-group {
+            position: relative;
+            margin-bottom: 28px;
+            width: 100%;
+        }
+        textarea {
+            width: 100%;
+            padding: 22px 14px 12px 14px;
+            border-radius: 10px;
+            border: 1.5px solid #cfd8dc;
+            font-size: 1.08rem;
+            resize: vertical;
+            min-height: 90px;
+            background: rgba(255,255,255,0.7);
+            box-sizing: border-box;
+            transition: border 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 8px rgba(44,62,80,0.06);
+            outline: none;
+        }
+        textarea:focus {
+            border: 1.5px solid #1976d2;
+            box-shadow: 0 2px 12px rgba(25,118,210,0.13);
+        }
+        .floating-label {
+            position: absolute;
+            left: 18px;
+            top: 18px;
+            color: #8fa1b3;
+            font-size: 1rem;
+            pointer-events: none;
+            background: transparent;
+            transition: 0.22s cubic-bezier(.23,1.01,.32,1);
+            padding: 0 4px;
+        }
+        textarea:focus + .floating-label,
+        textarea:not(:placeholder-shown) + .floating-label {
+            top: 4px;
+            left: 14px;
+            font-size: 0.92rem;
+            color: #1976d2;
+            background: rgba(255,255,255,0.85);
+        }
+        button {
+            background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+            color: #fff;
+            border: none;
+            padding: 14px 0;
+            width: 100%;
+            border-radius: 10px;
+            font-size: 1.13rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.18s;
+            box-shadow: 0 2px 12px rgba(25,118,210,0.10);
+            letter-spacing: 0.5px;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #1565c0 60%, #1976d2 100%);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 6px 24px rgba(25,118,210,0.16);
+        }
+        .result {
+            margin-top: 26px;
+            text-align: center;
+            font-size: 1.18rem;
+            color: #1976d2;
+            background: rgba(227,242,253,0.92);
+            border-radius: 8px;
+            padding: 14px 0;
+            width: 100%;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(25,118,210,0.09);
+            opacity: 0;
+            animation: fadeResult 0.8s 0.1s cubic-bezier(.23,1.01,.32,1) forwards;
+        }
+        @keyframes fadeResult {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .footer {
+            margin-top: 32px;
+            text-align: center;
+            color: #7b8ca7;
+            font-size: 0.98rem;
+            opacity: 0.7;
+            letter-spacing: 0.2px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px 6vw 16px 6vw;
+                max-width: 98vw;
+            }
+            h1 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <!-- Animated mail icon SVG -->
+            <svg viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 2v.01L12 13 4 6.01V6h16zm0 12H4V8.99l8 6.99 8-6.99V18z"/>
+            </svg>
+        </div>
+        <h1>Detector de Spam</h1>
+        <form method="POST" autocomplete="off">
+            <div class="form-group">
+                <textarea name="texto" id="texto" rows="5" placeholder=" " required></textarea>
+                <label class="floating-label" for="texto">Escribe tu mensaje aquí...</label>
+            </div>
+            <button type="submit">Analizar</button>
+        </form>
+        {% if result %}
+            <div class="result"><strong>{{ result }}</strong></div>
+        {% endif %}
+    </div>
+    <div class="footer">
+        <span style="color:#000000;"> &copy; Hecho con </span><span style="color:#f06292;">&#10084;</span>
+    </div>
+    <div class="cinnamoroll-icon">
+    <img src="https://assets.userstyles.org/assets_packs/type=style/user_id=1036656/screenshot_bb64c7f8-f9de-4c73-bcea-eac2661393e4.gif" width="100 px"/>
+</div>
+</body>
+</html>

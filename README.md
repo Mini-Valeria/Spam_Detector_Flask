@@ -1,6 +1,8 @@
 ### `SPAM DETECTOR`
 Este proyecto es una plataforma web que detecta si un texto es SPAM o NO SPAM, esto a través de Flask y la base de datos MongoDB. Tiene un diseño amigable e intuitivo al usuario para pegar el texto de
-su preferencia y analizarlo para saber si es o no spam.
+su preferencia y analizarlo para saber si es o no spam. 
+
+`Cabe aclarar que este proyecto solo funcionará en Visual Studio Code, y no en Spyder`
 #
 ### `INSTALACIÓN PREVIA EN PYTHON`
 Sigue los pasos a continuación:
